@@ -1,0 +1,42 @@
+{
+  "name": "news-explorer-api",
+  "version": "0.0.1",
+  "description": "API for diploma project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ustyuzhanina/news-explorer-api.git"
+  },
+  "author": "Elena Ustyuzhanina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ustyuzhanina/news-explorer-api/issues"
+  },
+  "homepage": "https://github.com/ustyuzhanina/news-explorer-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "celebrate": "^13.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-winston": "^4.0.5",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.9.28",
+    "validator": "^13.1.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4"
+  }
+}
