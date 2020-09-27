@@ -1,8 +1,6 @@
-/* eslint-disable consistent-return */
 const { AssertionError } = require('assert');
 const { MongoError } = require('mongodb');
 
-// eslint-disable-next-line no-unused-vars
 module.exports.errorHandler = (error, req, res, next) => {
   if (error.name === 'DocumentNotFoundError') {
     return res.status(404).json({ message: 'Документ не найден' });
@@ -39,7 +37,7 @@ module.exports.errorHandler = (error, req, res, next) => {
 
   const { statusCode = 500, message } = error;
 
-  res
+  return res
     .status(statusCode)
     .send({
     // проверяем статус и выставляем сообщение в зависимости от него
