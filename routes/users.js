@@ -1,8 +1,7 @@
 const router = require('express').Router();
 
-const { checkGetMeReqHeaders } = require('../middlewares/validation');
 const { getUserData } = require('../controllers/users');
 
-router.get('/me', checkGetMeReqHeaders, getUserData);
+router.get('/me', getUserData);
 
 module.exports = router;

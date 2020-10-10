@@ -1,16 +1,24 @@
+const { MongoError } = require('mongodb');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+const { devSecret } = require('../configs/key-config');
 const User = require('../models/user');
-const { notFoundError, badReqErr, authErr } = require('../configs/error-msg');
+const {
+  mongoErr,
+  notFoundError,
+  badReqErr,
+  authErr,
+} = require('../configs/error-msg');
 const BadRequestError = require('../errors/bad-request-err');
 const AuthorizationError = require('../errors/signin-err');
 const NotFoundError = require('../errors/not-found-err');
 
 module.exports.getUserData = (req, res, next) => {
-  const { me } = req.user._id;
+  const me = req.user._id;
 
-  User.findOne({ me })
+  User.findOne({ _id: me })
     .then((user) => {
       if (user) {
         res.send({
@@ -45,7 +53,27 @@ module.exports.createUser = (req, res, next) => {
       name: user.name,
       email: user.email,
     }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: err.message });
+      }
+
+      if (err instanceof MongoError && err.code === 11000) {
+        return res.status(409).json({
+          type: 'MongoError',
+          message: mongoErr.usedEmailErr,
+        });
+      }
+
+      if (err instanceof MongoError && err.code !== 11000) {
+        return res.status(503).json({
+          type: 'MongoError',
+          message: err.message,
+        });
+      }
+
+      return next(err);
+    });
 };
 
 module.exports.login = (req, res, next) => {
@@ -61,10 +89,10 @@ module.exports.login = (req, res, next) => {
           if (!matched) {
             return Promise.reject(new AuthorizationError(authErr.invalidCreds));
           }
-          const { NODE_ENV, JWT_SECRET } = process.env;
+
           const token = jwt.sign(
             { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            NODE_ENV === 'production' ? JWT_SECRET : devSecret,
             { expiresIn: '7d' },
           );
 
@@ -76,5 +104,18 @@ module.exports.login = (req, res, next) => {
           return res.send({ message: token });
         });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: err.message });
+      }
+
+      if (err instanceof MongoError && err.code !== 11000) {
+        return res.status(503).json({
+          type: 'MongoError',
+          message: err.message,
+        });
+      }
+
+      return next(err);
+    });
 };

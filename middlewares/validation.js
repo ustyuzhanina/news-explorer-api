@@ -58,12 +58,6 @@ const validateUserCredentials = celebrate({
   }),
 });
 
-const checkArticleReqHeaders = celebrate({
-  headers: Joi.object().keys({
-    'content-type': Joi.string().valid('application/json').required(),
-  }).unknown(true),
-});
-
 const checkArticleBody = celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required()
@@ -117,17 +111,9 @@ const checkArticleParams = celebrate({
   }),
 });
 
-const checkGetMeReqHeaders = celebrate({
-  headers: Joi.object().keys({
-    'content-type': Joi.string().valid('application/json').required(),
-  }).unknown(true),
-});
-
 module.exports = {
   validateUserBody,
   validateUserCredentials,
-  checkArticleReqHeaders,
   checkArticleBody,
   checkArticleParams,
-  checkGetMeReqHeaders,
 };

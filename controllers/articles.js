@@ -1,3 +1,4 @@
+const { MongoError } = require('mongodb');
 const { ObjectID } = require('mongodb');
 const Article = require('../models/article');
 const { notFoundError, forbidden } = require('../configs/error-msg');
@@ -5,7 +6,7 @@ const NotFoundError = require('../errors/not-found-err');
 const PermissionError = require('../errors/permission-err');
 
 module.exports.getArticles = (req, res, next) => {
-  Article.find({})
+  Article.find({ owner: req.user._id })
     .then((articles) => {
       if (articles.length) {
         res.send(articles);
@@ -40,7 +41,20 @@ module.exports.createArticle = (req, res, next) => {
       link: article.link,
       image: article.image,
     }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: err.message });
+      }
+
+      if (err instanceof MongoError) {
+        return res.status(503).json({
+          type: 'MongoError',
+          message: err.message,
+        });
+      }
+
+      return next(err);
+    });
 };
 
 module.exports.deleteArticle = (req, res, next) => {
@@ -48,12 +62,25 @@ module.exports.deleteArticle = (req, res, next) => {
     .orFail()
     .then((article) => {
       if (article.owner.toString() !== req.user._id) {
-        throw new PermissionError(forbidden);
+        throw new PermissionError(forbidden.deleteArticle);
       }
       article.remove()
         .then((document) => {
           res.send({ data: document });
         });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: err.message });
+      }
+
+      if (err instanceof MongoError) {
+        return res.status(503).json({
+          type: 'MongoError',
+          message: err.message,
+        });
+      }
+
+      return next(err);
+    });
 };

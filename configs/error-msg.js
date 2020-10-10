@@ -17,9 +17,17 @@ const forbidden = {
   deleteArticle: 'Запрещено',
 };
 
+const mongoErr = {
+  usedEmailErr: 'Пользователь с таким адресом электронной почты уже существует',
+};
+
+const serverErr = 'На сервере произошла ошибка';
+
 module.exports = {
   notFoundError,
   badReqErr,
   authErr,
   forbidden,
+  serverErr,
+  mongoErr,
 };

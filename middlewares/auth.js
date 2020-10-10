@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const devSecret = require('../configs/key-config');
+const { devSecret } = require('../configs/key-config');
 const { authErr } = require('../configs/error-msg');
 const AuthorizationError = require('../errors/signin-err');
 
