@@ -1,6 +1,6 @@
 # news-explorer-api
 
-Version 0.0.2
+Version 1.0.1
 
 ## About project:
 This is a REST API for News Explorer project, which enables its users to search for interesting news and save them in a user's personal account area.
