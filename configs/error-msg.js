@@ -1,6 +1,7 @@
 const notFoundError = {
   user: 'Нет пользователя с таким id',
   article: 'В базе данных еще нет ни одной новости',
+  articleId: 'В базе данных нет такой новости',
 };
 
 const badReqErr = {

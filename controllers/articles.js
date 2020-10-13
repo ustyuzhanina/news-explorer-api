@@ -59,7 +59,9 @@ module.exports.createArticle = (req, res, next) => {
 
 module.exports.deleteArticle = (req, res, next) => {
   Article.findOne({ _id: new ObjectID(req.params.articleId) }).select('+owner')
-    .orFail()
+    .orFail(() => {
+      throw new NotFoundError(notFoundError.articleId);
+    })
     .then((article) => {
       if (article.owner.toString() !== req.user._id) {
         throw new PermissionError(forbidden.deleteArticle);
