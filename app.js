@@ -3,10 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 
 const limiter = require('./configs/rate-limiter-config');
+const { corsOptions } = require('./configs/cors');
 const { dataBase, dbOptions } = require('./configs/db-config');
 const { errorHandler } = require('./modules/errorHandler.js');
 const routes = require('./routes');
@@ -17,6 +19,7 @@ const app = express();
 
 mongoose.connect(dataBase, dbOptions);
 
+app.use('*', cors(corsOptions));
 app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
