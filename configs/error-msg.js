@@ -10,7 +10,7 @@ const badReqErr = {
 };
 
 const authErr = {
-  invalidCreds: 'Неправильные почта или пароль',
+  invalidCreds: 'Неправильная почта или пароль',
   authRequired: 'Необходима авторизация',
 };
 

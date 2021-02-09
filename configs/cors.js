@@ -1,12 +1,4 @@
-require('dotenv').config();
-
-const { NODE_ENV } = process.env;
-
-const CORS_ORIGINS = NODE_ENV === 'production' ? [
-  'https://ustyuzhanina.github.io',
-  'https://news4u.xyz',
-  'http://news4u.xyz',
-] : 'http://localhost:8080';
+const CORS_ORIGINS = ['https://ustyuzhanina.github.io', 'https://news4u.xyz', 'http://news4u.xyz', 'http://localhost:8080'];
 
 module.exports.corsOptions = {
   origin: CORS_ORIGINS,

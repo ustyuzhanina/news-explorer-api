@@ -100,6 +100,7 @@ module.exports.login = (req, res, next) => {
             maxAge: 3600 * 24 * 7 * 1000,
             httpOnly: true,
             sameSite: true,
+            secure: true,
           });
           return res.send({ message: token });
         });
@@ -118,4 +119,10 @@ module.exports.login = (req, res, next) => {
 
       return next(err);
     });
+};
+
+module.exports.logout = (req, res) => {
+  res
+    .clearCookie('jwt')
+    .status(200).send({ message: 'Вы вышли вышли из системы!' });
 };
