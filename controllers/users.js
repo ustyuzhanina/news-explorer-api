@@ -99,7 +99,7 @@ module.exports.login = (req, res, next) => {
           res.cookie('jwt', token, {
             maxAge: 3600 * 24 * 7 * 1000,
             httpOnly: true,
-            sameSite: 'Lax',
+            sameSite: 'none',
             secure: true,
             // domain: 'https://ustyuzhanina.github.io',
           });
