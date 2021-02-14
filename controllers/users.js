@@ -100,6 +100,7 @@ module.exports.login = (req, res, next) => {
             maxAge: 3600 * 24 * 7 * 1000,
             httpOnly: true,
             sameSite: true,
+            domain: 'https://ustyuzhanina.github.io',
             // secure: true,
           });
           return res.send({ message: token });
