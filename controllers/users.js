@@ -101,7 +101,6 @@ module.exports.login = (req, res, next) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            // domain: 'https://ustyuzhanina.github.io',
           });
           return res.send({ message: token });
         });
@@ -124,6 +123,11 @@ module.exports.login = (req, res, next) => {
 
 module.exports.logout = (req, res) => {
   res
-    .clearCookie('jwt')
+    .res.cookie('jwt', {
+      maxAge: -1,
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    })
     .status(200).send({ message: 'Вы вышли вышли из системы!' });
 };
