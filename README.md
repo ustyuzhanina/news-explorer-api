@@ -1,6 +1,6 @@
 # news-explorer-api
 
-Version 1.0.1
+Version 1.0.2
 
 ## About project:
 This is a REST API for News Explorer project, which enables its users to search for interesting news and save them in a user's personal account area.
@@ -12,7 +12,7 @@ Domain: https://api.news4u.xyz and http://api.news4u.xyz
 <img src="./images/label.jpg" alt="News Explorer main page with a search engine empty space line" width="100%"/>
 
 ## Technologies used:
-ES6, OOP, Node.js, Express, MongoDB, celebrate, Joi
+ES6, OOP, Node.js, Express, MongoDB, celebrate, Joi, cors
 
 
 ## Launch instructions:
@@ -26,7 +26,8 @@ ES6, OOP, Node.js, Express, MongoDB, celebrate, Joi
 __Users__:
 
 - /signup - POST request creates new user (to create a valid req.body please refer to ./models/user.js_)
-- /signin - POST request enables the user's authorization and saves a newly generated token to cookie.
+- /signin - POST request enables the user's authorization and saves a newly generated token to cookie
+- /signout - GET request removes the user's token at the server's side
 - /users/me - GET request sends the user's credentials
 
 __Articles__:

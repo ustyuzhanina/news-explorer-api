@@ -1,4 +1,4 @@
-const CORS_ORIGINS = ['https://ustyuzhanina.github.io', 'https://news4u.xyz', 'http://news4u.xyz', 'http://localhost:8080'];
+const CORS_ORIGINS = ['https://ustyuzhanina.github.io', 'https://news4u.xyz', 'http://news4u.xyz'];
 
 module.exports.corsOptions = {
   origin: CORS_ORIGINS,
