@@ -123,8 +123,9 @@ module.exports.login = (req, res, next) => {
 
 module.exports.logout = (req, res) => {
   res
-    .res.cookie('jwt', {
-      maxAge: -1,
+    .cookie('jwt', '', {
+      maxAge: 0,
+      expires: 'Wed, 30 Aug 2019 00:00:00 GMT',
       httpOnly: true,
       sameSite: 'none',
       secure: true,
